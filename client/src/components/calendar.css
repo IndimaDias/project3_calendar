@@ -123,6 +123,8 @@
     width: 100%;
     background: var(--neutral-color);
     border: 1px solid var(--border-color);
+    margin-top : 20px;
+    margin-bottom : 20px;
   }
   
   .calendar .header {
@@ -131,7 +133,7 @@
     font-size: 115%;
     padding: 1.5em 0;
     border-bottom: 1px solid var(--border-color);
-    background: blue;
+    background: rgb(242, 242, 245);
   }
   
   .calendar .header .icon {
@@ -164,7 +166,7 @@
   
   .calendar .body .cell {
     position: relative;
-    height: 10em;
+    height: 8em;
     border-right: 1px solid var(--border-color);
     overflow: hidden;
     cursor: pointer;
@@ -240,5 +242,12 @@
   }
 
   .calendar .body .cell .eventDiv{
-      margin-top:50%;
+      margin-top:20%;
+      margin-bottom: 20%;
+  }
+
+  .contaier{
+    padding: 0;
+    /* margin-top: 10%; */
+  
   }

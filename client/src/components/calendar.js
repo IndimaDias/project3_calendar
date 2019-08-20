@@ -2,6 +2,8 @@ import React from "react";
 import dateFns, { endOfToday } from "date-fns";
 
 import events from "../events.json";
+import PTags from "./PTags";
+
 import "./calendar.css";
 
 class Calendar extends React.Component {
@@ -16,6 +18,7 @@ class Calendar extends React.Component {
     const dateFormat = "MMMM YYYY";
     
     return (
+      
         <div className="header row flex-middle">
           <div className="col col-start">
             <div className="icon" onClick={this.prevMonth}>
@@ -31,6 +34,7 @@ class Calendar extends React.Component {
             <div className="icon">chevron_right</div>
           </div>
         </div>
+      
       );
   }
 
@@ -88,8 +92,10 @@ class Calendar extends React.Component {
         >
            
            <div className = "eventDiv">
-                {daysEvents.map(today => (
-                    <p className = "eventTag" id = {today.id} key = {today.key}>{today.name}</p>
+                {daysEvents.map(today => (    
+                   <PTags
+                   event = {today}/>
+
                 ))}
            </div>
            
@@ -137,7 +143,7 @@ class Calendar extends React.Component {
 
   render() {
     return (
-        <div className="calendar">
+        <div className=" container calendar">
         {this.renderHeader()}
         {this.renderDays()}
         {this.renderCells()}

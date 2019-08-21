@@ -1,6 +1,6 @@
 import React from "react";
 
-import dateFns, { endOfToday } from "date-fns";
+import dateFns from "date-fns";
 import "./ptag.css";
 
 class PTags extends React.Component{

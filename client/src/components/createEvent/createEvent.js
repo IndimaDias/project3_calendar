@@ -5,20 +5,30 @@ import Header from "../header/header.js";
 import "./createEvent.css";
 import Select from "../selectOption/SelectOption.js";
 
+import API from "../../utils/API.js"
 
 class Event extends React.Component{
     
     state = {
-        startDate : "",
-        startTime : "",
-        endDate : "",
-        endTime :"",
+        event : {
+            eventTitle:"",
+            startDate : "",
+            startTime : "",
+            endDate : "",
+            endTime :"",
+            repeat : "",
+            location : "",
+            notes : "",
+            remind : "",
+            type : "",
+            invities : []
+        },        
         repeatOption : ["Never", "Daily", "Weekly"],
-        remind : ["At time of event","5 minutes before", 
+        remindOption : ["At time of event","5 minutes before", 
                   "15 minutes before", "30 minutes before", 
                   "1 hour before","2 hours before", 
                   "1 day before", "1 week before"],
-        type : ["Work","Invite"]          
+        eventType : ["Work","Invite"]          
     }
     
     setCurrentDate = () =>{
@@ -28,16 +38,21 @@ class Event extends React.Component{
 
         const date = new Date();
 
+    // get current date
         const currentDate =  dateFns.format(date,dateFormat);
+
+    //get current time    
         const currentTime =  dateFns.format(date,timeFormat);
+
     //    get the current time and add an hour
         const endingTime  = dateFns.format(dateFns.addHours(date,1),timeFormat);
        
 
-        this.setState ({startDate : currentDate});
-        this.setState ({endDate :  currentDate})
-        this.setState({startTime :currentTime});
-        this.setState({endTime : endingTime});
+        this.setState ({event : {...this.state.event, 
+                        startDate: currentDate,
+                        endDate : currentDate,
+                        startTime :currentTime,
+                        endTime : endingTime}});
         
     }
 
@@ -45,6 +60,17 @@ class Event extends React.Component{
     componentDidMount (){
        
         this.setCurrentDate();
+    }
+
+
+     onCancelClick = () => {
+
+    }
+
+    onSubmitClick = () =>{
+        // API.saveEvent({
+        //     eventTitle : this.
+        // })
     }
 
     render(){
@@ -59,7 +85,8 @@ class Event extends React.Component{
                             className="form-control col-10"
                             id="Title"
                             type="text"                    
-                            placeholder="New Event"                    
+                            placeholder="New Event"
+                            value = {this.state.event.eventTitle}                    
                             required
                         />
                     </div>
@@ -70,9 +97,7 @@ class Event extends React.Component{
                                 className = " form-control col-3"
                                 id = "startDate"
                                 type = "date"                                
-                                value = {this.state.startDate}                                
-                                // placeholder = {this.state.startDate}
-                                
+                                value = {this.state.event.startDate}                                                                                                
                                 required
                             />
 
@@ -80,7 +105,7 @@ class Event extends React.Component{
                                 className = "form-control col-3"
                                 id = "startTime"
                                 type = "time"
-                                value = {this.state.startTime}                        
+                                value = {this.state.event.startTime}                        
                                 required
                             />
                          </div>               
@@ -93,7 +118,7 @@ class Event extends React.Component{
                                 className = " form-control col-3"
                                 id = "endDate"
                                 type = "date"
-                                value = {this.state.endDate}
+                                value = {this.state.event.endDate}
                                 required
                             />
 
@@ -101,7 +126,7 @@ class Event extends React.Component{
                                 className = "form-control col-3"
                                 id = "endTime"
                                 type = "time"
-                                value = {this.state.endTime}
+                                value = {this.state.event.endTime}
                                 required
                             />
                          </div>               
@@ -139,7 +164,7 @@ class Event extends React.Component{
                          <div className = "form-group row">
                          <label htmlFor="Select" className="col-sm-2 col-form-label">Remind</label>
                              <Select
-                             options = {this.state.remind}/>
+                             options = {this.state.remindOption}/>
                             
                          </div>               
                     </div>
@@ -148,7 +173,7 @@ class Event extends React.Component{
                          <div className = "form-group row">
                          <label htmlFor="Select" className="col-sm-2 col-form-label">Type</label>
                              <Select
-                             options = {this.state.type}/>
+                             options = {this.state.eventType}/>
                             
                          </div>               
                     </div>
@@ -166,8 +191,19 @@ class Event extends React.Component{
 
                     <div className = "btnRow">
                         <div className="row">
-                            <button type="submit" className="btn btn-primary">Save</button>
-                            <button className = "btn btn-secondory">Cancel</button>
+                            <button 
+                              type="submit" 
+                              className="btn btn-primary"
+                              onClick = {this.onSubmitClick}
+                            >
+                              Save
+                            </button>
+                            <button 
+                             className = "btn btn-secondory"
+                             onClick = {this.onCancelClick}
+                            >
+                             Cancel
+                            </button>
                         </div>
                     </div>
                 </form>

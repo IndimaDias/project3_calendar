@@ -1,8 +1,8 @@
 import React from "react";
 import dateFns, { endOfToday } from "date-fns";
 
-import events from "../events.json";
-import PTags from "./PTags";
+import events from "../../events.json";
+import PTags from "../pTags/PTags.js";
 
 import "./calendar.css";
 

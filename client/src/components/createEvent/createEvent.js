@@ -22,22 +22,28 @@ class Event extends React.Component{
     }
     
     setCurrentDate = () =>{
-        console.log("test2");
-        const dateFormat = "MM-DD-YYYY";
-        const timeFormat = "HH:mm AM";
+       
+        const dateFormat = "YYYY-MM-DD";
+        const timeFormat = "HH:mm";
 
         const date = new Date();
 
-        console.log(date);
+        const currentDate =  dateFns.format(date,dateFormat);
+        const currentTime =  dateFns.format(date,timeFormat);
+    //    get the current time and add an hour
+        const endingTime  = dateFns.format(dateFns.addHours(date,1),timeFormat);
+       
 
-        this.setState ({startDate : dateFns.format(date,dateFormat)});
-        this.setState({startTime : dateFns.format(date,timeFormat)});
-        console.log(this.state.startDate);
+        this.setState ({startDate : currentDate});
+        this.setState ({endDate :  currentDate})
+        this.setState({startTime :currentTime});
+        this.setState({endTime : endingTime});
+        
     }
 
 
     componentDidMount (){
-        console.log("test1");
+       
         this.setCurrentDate();
     }
 
@@ -74,7 +80,7 @@ class Event extends React.Component{
                                 className = "form-control col-3"
                                 id = "startTime"
                                 type = "time"
-                                placeholder = {this.state.startTime}
+                                value = {this.state.startTime}                        
                                 required
                             />
                          </div>               
@@ -87,7 +93,7 @@ class Event extends React.Component{
                                 className = " form-control col-3"
                                 id = "endDate"
                                 type = "date"
-                                placeholder = {this.endDate}
+                                value = {this.state.endDate}
                                 required
                             />
 
@@ -95,7 +101,7 @@ class Event extends React.Component{
                                 className = "form-control col-3"
                                 id = "endTime"
                                 type = "time"
-                                placeholder = {this.endTime}
+                                value = {this.state.endTime}
                                 required
                             />
                          </div>               

@@ -28,7 +28,8 @@ class Event extends React.Component{
                   "15 minutes before", "30 minutes before", 
                   "1 hour before","2 hours before", 
                   "1 day before", "1 week before"],
-        eventType : ["Work","Invite"]          
+        eventType : ["Work","Invite"],
+        userId : 1          
     }
     
     setCurrentDate = () =>{
@@ -68,9 +69,28 @@ class Event extends React.Component{
     }
 
     onSubmitClick = () =>{
-        // API.saveEvent({
-        //     eventTitle : this.
-        // })
+        let newEvent = this.state.event;
+
+        let eventData = {
+            eventName : newEvent.eventTitle,
+            startDate : newEvent.startDate,
+            endDate : newEvent.endDate,
+            repeatOpt_id : newEvent.repeat,
+            location : newEvent.location,
+            remindOpt_id : newEvent.remind,
+            notes : newEvent.type,
+            userId : this.state.userId
+            
+        };
+
+        API.saveEvent(
+            eventData
+        ).then( (err) => {
+            if (err){
+                console.log(err);
+            }
+        }
+        )
     }
 
     render(){
@@ -86,7 +106,7 @@ class Event extends React.Component{
                             id="Title"
                             type="text"                    
                             placeholder="New Event"
-                            value = {this.state.event.eventTitle}                    
+                            defaultValue = {this.state.event.eventTitle}                    
                             required
                         />
                     </div>

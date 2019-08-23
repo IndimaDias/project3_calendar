@@ -7,13 +7,17 @@ import Select from "../selectOption/SelectOption.js";
 
 import API from "../../utils/API.js"
 
+import repeatOption from "../../repeatOption.json";
+import remindOption from "../../remindOption.json";
+import eventType from "../../eventType.json"
+
 class Event extends React.Component{
     
     state = {
         event : {
             eventTitle:"",
             startDate : "",
-            startTime : "",
+            startTime : "",                                         
             endDate : "",
             endTime :"",
             repeat : "",
@@ -23,12 +27,9 @@ class Event extends React.Component{
             type : "",
             invities : []
         },        
-        repeatOption : ["Never", "Daily", "Weekly"],
-        remindOption : ["At time of event","5 minutes before", 
-                  "15 minutes before", "30 minutes before", 
-                  "1 hour before","2 hours before", 
-                  "1 day before", "1 week before"],
-        eventType : ["Work","Invite"],
+        repeatOption,
+        remindOption,
+        eventType ,
         userId : 1          
     }
     
@@ -36,7 +37,6 @@ class Event extends React.Component{
        
         const dateFormat = "YYYY-MM-DD";
         const timeFormat = "HH:mm";
-
         const date = new Date();
 
     // get current date
@@ -57,7 +57,13 @@ class Event extends React.Component{
         
     }
 
+    handleInputChange = event =>{
+        console.log(event);
+        let value = event.target.value;
+        const name = event.target.name;
 
+        this.setState({[name]:value});
+    }
     componentDidMount (){
        
         this.setCurrentDate();
@@ -73,8 +79,8 @@ class Event extends React.Component{
 
         let eventData = {
             eventName : newEvent.eventTitle,
-            startDate : newEvent.startDate,
-            endDate : newEvent.endDate,
+            startDate : Date.parse(`${newEvent.startDate} ${newEvent.startTime}`),
+            endDate : Date.parse(`${newEvent.endDate} ${newEvent.endTime}`),
             repeatOpt_id : newEvent.repeat,
             location : newEvent.location,
             remindOpt_id : newEvent.remind,
@@ -83,6 +89,7 @@ class Event extends React.Component{
             
         };
 
+        
         API.saveEvent(
             eventData
         ).then( (err) => {
@@ -106,7 +113,8 @@ class Event extends React.Component{
                             id="Title"
                             type="text"                    
                             placeholder="New Event"
-                            defaultValue = {this.state.event.eventTitle}                    
+                            value = {this.state.event.eventTitle}                    
+                            onChange = {this.handleInputChange}
                             required
                         />
                     </div>
@@ -117,7 +125,8 @@ class Event extends React.Component{
                                 className = " form-control col-3"
                                 id = "startDate"
                                 type = "date"                                
-                                value = {this.state.event.startDate}                                                                                                
+                                value = {this.state.event.startDate}    
+                                onChange = {this.handleInputChange}                                                                                            
                                 required
                             />
 
@@ -125,7 +134,8 @@ class Event extends React.Component{
                                 className = "form-control col-3"
                                 id = "startTime"
                                 type = "time"
-                                value = {this.state.event.startTime}                        
+                                value = {this.state.event.startTime}  
+                                onChange = {this.handleInputChange}                      
                                 required
                             />
                          </div>               
@@ -139,6 +149,7 @@ class Event extends React.Component{
                                 id = "endDate"
                                 type = "date"
                                 value = {this.state.event.endDate}
+                                onChange = {this.handleInputChange}
                                 required
                             />
 
@@ -147,6 +158,7 @@ class Event extends React.Component{
                                 id = "endTime"
                                 type = "time"
                                 value = {this.state.event.endTime}
+                                onChange = {this.handleInputChange}
                                 required
                             />
                          </div>               
@@ -156,7 +168,8 @@ class Event extends React.Component{
                          <div className = "form-group row">
                          <label htmlFor="Select" className="col-sm-2 col-form-label">Repeat</label>
                              <Select
-                             options = {this.state.repeatOption}/>
+                             options = {this.state.repeatOption}
+                             />
                             
                          </div>               
                     </div>
@@ -166,7 +179,8 @@ class Event extends React.Component{
                                 className = " form-control col-8"
                                 id = "location"
                                 type = "text"                               
-                                required
+                                value = {this.state.event.location}
+                                onChange = {this.handleInputChange}
                             />                        
                     </div>
 
@@ -176,7 +190,8 @@ class Event extends React.Component{
                                 className = " form-control col-8"
                                 id = "notes"
                                 type = "text"                                
-                                required
+                                value = {this.state.event.notes}
+                                onChange = {this.handleInputChange}
                             />                        
                     </div>
 
@@ -204,7 +219,7 @@ class Event extends React.Component{
                                 className = " form-control col-8"
                                 id = "invites"
                                 type = "text"                            
-                                required
+                                
                             />      
                             <button className="btn btn-sm iconButton"><i className="fa fa-plus"></i></button>                  
                     </div>

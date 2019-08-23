@@ -8,7 +8,7 @@ class Select extends React.Component{
             <div className="option col-4">
                 <select className="form-control col-12">
                     {this.props.options.map(optionItem =>(
-                        <option>{optionItem}</option>
+                        <option id = {optionItem.id}>{optionItem.option}</option>
                     ))}
                     
                 </select>

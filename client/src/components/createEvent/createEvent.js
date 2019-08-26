@@ -35,7 +35,7 @@ class Event extends React.Component{
             userId : 1          
         }
         
-        this.handleSelectChange = this.handleSelectChange.bind(this);
+        
         this.handleInputChange = this.handleInputChange.bind(this);
     
     }
@@ -65,7 +65,7 @@ class Event extends React.Component{
     }
 
     handleInputChange = ev =>{
-        console.log(ev);
+        console.log("test1");
         let value = ev.target.value;
         console.log(value);
         const name = ev.target.name;
@@ -73,7 +73,7 @@ class Event extends React.Component{
 
         // this.setState({[name]:value});
         this.setState({event : {...this.state.event, [name] : value}});
-        console.log(this.state.event.repeat);
+        
     }
 
     handleSelectChange = selectedOption =>{
@@ -83,7 +83,7 @@ class Event extends React.Component{
     }
 
     componentDidMount (){
-       console.log(this.state.event.repeat);
+      
         this.setCurrentDate();
     }
 
@@ -119,6 +119,16 @@ class Event extends React.Component{
         )
     }
 
+    // componentDidUpdate(nextProps) {
+    //     console.log("update");
+    //     console.log(nextProps);
+    //     if (nextProps.event !== this.props.event) {
+    //         console.log("update2");
+    //       this.setState({ event: nextProps.event.repeat })
+    //     }
+    //     console.log(this.state.event);
+    // }
+
     render(){
         
 
@@ -145,7 +155,8 @@ class Event extends React.Component{
                             <input
                                 className = " form-control col-3"
                                 id = "startDate"
-                                type = "date"                                
+                                type = "date"
+                                name = "startDate"                                
                                 value = {this.state.event.startDate}    
                                 onChange = {this.handleInputChange}                                                                                            
                                 required
@@ -154,6 +165,7 @@ class Event extends React.Component{
                             <input
                                 className = "form-control col-3"
                                 id = "startTime"
+                                name = "startTime"
                                 type = "time"
                                 value = {this.state.event.startTime}  
                                 onChange = {this.handleInputChange}                      
@@ -168,6 +180,7 @@ class Event extends React.Component{
                             <input
                                 className = " form-control col-3"
                                 id = "endDate"
+                                name = "endDate"
                                 type = "date"
                                 value = {this.state.event.endDate}
                                 onChange = {this.handleInputChange}
@@ -177,6 +190,7 @@ class Event extends React.Component{
                             <input
                                 className = "form-control col-3"
                                 id = "endTime"
+                                name = "endTime"
                                 type = "time"
                                 value = {this.state.event.endTime}
                                 onChange = {this.handleInputChange}
@@ -187,12 +201,13 @@ class Event extends React.Component{
 
                     <div className = "row">
                          <div className = "form-group row">
-                         <label htmlFor="Select" className="col-sm-2 col-form-label">Repeat</label>
+                         <label htmlFor="repeat" className="col-sm-2 col-form-label">Repeat</label>
                              <Select
-                              value = {this.state.event.repeat}
                               name = "repeat"
-                              onChange = {this.handleInputChange}
                               options = {this.state.repeatOption}
+                              value = {this.state.event.repeat}                              
+                              onChange = {this.handleInputChange}
+                             
                              />
                             
                          </div>               
@@ -221,7 +236,7 @@ class Event extends React.Component{
 
                     <div className = "row">
                          <div className = "form-group row">
-                         <label htmlFor="Select" className="col-sm-2 col-form-label">Remind</label>
+                         <label htmlFor="remind" className="col-sm-2 col-form-label">Remind</label>
                              <Select
                              options = {this.state.remindOption}
                              name = "remind" 
@@ -235,7 +250,8 @@ class Event extends React.Component{
                          <div className = "form-group row">
                          <label htmlFor="Select" className="col-sm-2 col-form-label">Type</label>
                              <Select
-                             options = {this.state.eventType}/>
+                             options = {this.state.eventType}
+                             />
                             
                          </div>               
                     </div>

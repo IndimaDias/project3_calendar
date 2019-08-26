@@ -4,18 +4,17 @@ import "./selectOption.css";
     
 class Select extends React.Component{
     render(){
-        console.log(this.props.options[0].id)
+        console.log("select");
+       
         return(
             <div className="option col-4">
-                <select 
-                    selected = {this.props.options[0].id}
+                <select                   
                     id = {this.props.name}
                     name = {this.props.name}
                     value = {this.props.value}
-                    onChange = {() => this.props.handleInputChange}
+                    onChange = {this.props.handleInputChange}
                     className="form-control col-12"
-                    
-                    >
+                                    >
                     {this.props.options.map(optionItem =>(
                         <option 
                           id = {optionItem.id} 
@@ -24,6 +23,7 @@ class Select extends React.Component{
                         //   onChange = {this.props.handleInputChange}
                         > {optionItem.option}
                         </option>
+                        
                     ))}
                     
                 </select>
